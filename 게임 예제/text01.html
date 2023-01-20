@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    div {
+      background: #eee;
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas" width="480" height="320"></canvas>
+</body>
+<script>
+  const canvas = document.getElementById("myCanvas");
+  const ctx =  canvas.getContext("2d");
+
+  let x = canvas.width/2;
+  let y = canvas.height-30;
+  let dx = 2;
+  let dy = -2;
+  let ballRadius = 10;
+  let paddleHeigth = 10;
+  let paddleWidth = 75;
+  let paddleX = (canvas.width-paddleWidth)/2;
+  let rightPressed = false;
+  let leftPressed = false;
+
+function drawPaddle() {
+  ctx.beginPath();
+  ctx.rect(paddleX, canvas-height-paddleHeigth, paddleWidth, paddleHeigth);
+  ctx.fillStyle = "0095DD";
+  ctx.fill();
+  ctx.closePath();
+}
+function drawBall() {
+  ctx.beginPath();
+  ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+  ctx.fillStyle = "#0095DD";
+  ctx.fill();
+  ctx.closePath();
+  
+}
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawBall();
+  x += dx;
+  y += dy;
+  if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
+    dy = -dy;
+  }
+  if(x + dx > canvas.height-ballRadius || x + dx < ballRadius) {
+    dx = -dx;
+  }
+  
+}
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+function keyDownHandler(e) {
+  if(e.keyCode == 39) {
+    rigtPressed = true;
+  } else if(e.keyCode == 37) {
+    leftPressed = true;
+  }
+}
+function keyUpHandler(e) {
+  if(e.keyCode == 39) {
+    rigtPressed = true;
+  } else if(e.keyCode == 37) {
+    leftPressed = true;
+  }
+}
+setInterval(draw, 10)
+  
+  </script>
+</html>
